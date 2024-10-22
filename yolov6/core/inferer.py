@@ -22,8 +22,13 @@ from yolov6.data.datasets import LoadData
 from yolov6.utils.nms import non_max_suppression_seg, non_max_suppression_seg_solo
 from yolov6.utils.torch_utils import get_model_info
 
+
+PKG_DIR = Path(__file__).parent.parent
+UTILS_DIR = PKG_DIR / 'utils'
+DEFAULT_FONT_PATH = UTILS_DIR / 'Arial.ttf'
+
 class Inferer:
-    def __init__(self, source, webcam, webcam_addr, weights, device, yaml, img_size, half):
+    def __init__(self, source, webcam, webcam_addr, weights, device, yaml, img_size, half, font=DEFAULT_FONT_PATH):
 
         self.__dict__.update(locals())
 
@@ -496,9 +501,9 @@ class Inferer:
                         thickness=tf, lineType=cv2.LINE_AA)
         return image
 
-    @staticmethod
-    def font_check(font='./yolov6/utils/Arial.ttf', size=10):
+    def font_check(self, size=10):
         # Return a PIL TrueType Font, downloading to CONFIG_DIR if necessary
+        font = self.font
         assert osp.exists(font), f'font path not exists: {font}'
         try:
             return ImageFont.truetype(str(font) if font.exists() else font.name, size)

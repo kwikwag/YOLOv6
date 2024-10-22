@@ -15,10 +15,6 @@ from pycocotools.cocoeval import COCOeval
 
 from tensorrt_processor import Processor
 
-ROOT = os.getcwd()
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))
-
 from yolov6.utils.events import LOGGER
 
 IMG_FORMATS = ["bmp", "jpg", "jpeg", "png", "tif", "tiff", "dng", "webp", "mpo"]

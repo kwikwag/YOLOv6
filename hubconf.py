@@ -126,7 +126,7 @@ class Detector(DetectBackend):
             img = img[None]
 
         prediction = self.forward(img, img_src.shape)
-        out = {k: v.cpu().numpy() for k, v in prediction.items()}
+        out = {k: v.detach().cpu().numpy() for k, v in prediction.items()}
         out['classes'] = [self.class_names[i] for i in out['labels']]
         return out
 

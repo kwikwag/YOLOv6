@@ -3,12 +3,6 @@ import time
 import sys
 import os
 
-ROOT = os.getcwd()
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))
-
-sys.path.append('../../')
-
 from yolov6.models.effidehead import Detect
 from yolov6.layers.common import *
 from yolov6.utils.events import LOGGER, load_yaml

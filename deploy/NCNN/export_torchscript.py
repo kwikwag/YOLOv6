@@ -7,10 +7,6 @@ import os
 import torch
 import torch.nn as nn
 
-ROOT = os.getcwd()
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))
-
 from yolov6.models.yolo import *
 from yolov6.models.effidehead import Detect as NormDetect
 from yolov6.models.heads.effidehead_lite import Detect as LiteDetect

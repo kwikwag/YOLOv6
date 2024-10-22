@@ -17,9 +17,6 @@ import numpy
 import torch
 import sys
 import os
-ROOT = os.getcwd()
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))
 # Run in original code
 param_state_dict = torch.load('../weights/yolov6_v3/p5/yolov6m.pt')
 
@@ -59,9 +56,6 @@ torch.save(ckpt, 'weights/YOLOv6m_newtensor.pt')
 import torch
 import sys
 import os
-ROOT = os.getcwd()
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))
 # Run in latest code
 m = torch.load('runs/train/coco_yolov6m_distill_retry/weights/last_ckpt.pt') #步骤1保存的模型路径
 state_dict = torch.load('../yolov6_3.0/weights/YOLOv6m_newtensor.pt') #步骤2转换权重键值后保存的模型路径

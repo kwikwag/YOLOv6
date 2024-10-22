@@ -8,9 +8,6 @@ import ncnn
 import sys
 import os
 
-ROOT = os.getcwd()
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))
 MAJOR, MINOR = map(int, cv2.__version__.split('.')[:2])
 assert MAJOR == 4
 

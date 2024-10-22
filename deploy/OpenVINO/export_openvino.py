@@ -9,10 +9,6 @@ import torch.nn as nn
 import onnx
 import subprocess
 
-ROOT = os.getcwd()
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))
-
 from yolov6.models.yolo import *
 from yolov6.models.effidehead import Detect
 from yolov6.layers.common import *
