@@ -14,7 +14,40 @@ Implementation of Instance Segmentation based on [YOLOv6 v4.0 code](https://gith
   <br>
 </p>
 
-## Performance on MSCOCO
+
+## What's New
+- [2023.09.15] Release [YOLOv6-Segmentation](https://github.com/meituan/YOLOv6/tree/yolov6-seg). 🚀 [Performance](https://github.com/meituan/YOLOv6/tree/yolov6-seg#yolov6-segmentation)
+- [2023.04.28] Release [YOLOv6Lite](configs/yolov6_lite/README.md) models on mobile or CPU. ⭐️ [Mobile Benchmark](#Mobile-Benchmark)
+- [2023.03.10] Release [YOLOv6-Face](https://github.com/meituan/YOLOv6/tree/yolov6-face). 🔥 [Performance](https://github.com/meituan/YOLOv6/tree/yolov6-face#performance-on-widerface)
+- [2023.03.02] Update [base models](configs/base/README.md) to version 3.0.
+- [2023.01.06] Release P6 models and enhance the performance of P5 models. ⭐️ [Benchmark](#Benchmark)
+- [2022.11.04] Release [base models](configs/base/README.md) to simplify the training and deployment process.
+- [2022.09.06] Customized quantization methods. 🚀 [Quantization Tutorial](./tools/qat/README.md)
+- [2022.09.05] Release M/L models and update N/T/S models with enhanced performance.
+- [2022.06.23] Release N/T/S models with excellent performance.
+
+## Object Detection Benchmark
+| Model                                                        | Size | mAP<sup>val<br/>0.5:0.95 | Speed<sup>T4<br/>trt fp16 b1 <br/>(fps) | Speed<sup>T4<br/>trt fp16 b32 <br/>(fps) | Params<br/><sup> (M) | FLOPs<br/><sup> (G) |
+| :----------------------------------------------------------- | ---- | :----------------------- | --------------------------------------- | ---------------------------------------- | -------------------- | ------------------- |
+| [**YOLOv6-N**](https://github.com/meituan/YOLOv6/releases/download/0.4.0/yolov6n.pt) | 640  | 37.5                     | 779                                     | 1187                                     | 4.7                  | 11.4                |
+| [**YOLOv6-S**](https://github.com/meituan/YOLOv6/releases/download/0.4.0/yolov6s.pt) | 640  | 45.0                     | 339                                     | 484                                      | 18.5                 | 45.3                |
+| [**YOLOv6-M**](https://github.com/meituan/YOLOv6/releases/download/0.4.0/yolov6m.pt) | 640  | 50.0                     | 175                                     | 226                                      | 34.9                 | 85.8                |
+| [**YOLOv6-L**](https://github.com/meituan/YOLOv6/releases/download/0.4.0/yolov6l.pt) | 640  | 52.8                     | 98                                      | 116                                      | 59.6                 | 150.7               |
+|                              |                               |                                |                    |                        |
+| [**YOLOv6-N6**](https://github.com/meituan/YOLOv6/releases/download/0.4.0/yolov6n6.pt) | 1280 | 44.9                     | 228                                     | 281                                      | 10.4                 | 49.8                |
+| [**YOLOv6-S6**](https://github.com/meituan/YOLOv6/releases/download/0.4.0/yolov6s6.pt) | 1280 | 50.3                     | 98                                      | 108                                      | 41.4                 | 198.0               |
+| [**YOLOv6-M6**](https://github.com/meituan/YOLOv6/releases/download/0.4.0/yolov6m6.pt) | 1280 | 55.2                     | 47                                      | 55                                       | 79.6                 | 379.5               |
+| [**YOLOv6-L6**](https://github.com/meituan/YOLOv6/releases/download/0.4.0/yolov6l6.pt) | 1280 | 57.2                     | 26                                      | 29                                       | 140.4                | 673.4               |
+<details>
+<summary>Table Notes</summary>
+
+- All checkpoints are trained with self-distillation except for YOLOv6-N6/S6 models trained to 300 epochs without distillation.
+- Results of the mAP and speed are evaluated on [COCO val2017](https://cocodataset.org/#download) dataset with the input resolution of 640×640 for P5 models and 1280x1280 for P6 models.
+- Speed is tested with TensorRT 7.2 on T4.
+- Refer to [Test speed](./docs/Test_speed.md) tutorial to reproduce the speed results of YOLOv6.
+- Params and FLOPs of YOLOv6 are estimated on deployed models.
+
+## Segmentation Benchmark
 | Model                                                        | Size | mAP<sup>box<br/>50-95 | mAP<sup>mask<br/>50-95 | Speed<sup>T4<br/>trt fp16 b1 <br/>(fps) | Params<br/><sup> (M) | FLOPs<br/><sup> (G) |
 | :----------------------------------------------------------- | ---- | :-------------------- | ---------------------- | --------------------------------------- | -------------------- | ------------------- |
 | [**YOLOv6-N**](https://github.com/meituan/YOLOv6/releases/download/0.4.1/yolov6n_seg.pt) | 640  | 35.3                  | 31.2                   | 645                                     | 4.9                  | 7.0                 |
@@ -27,9 +60,6 @@ Implementation of Instance Segmentation based on [YOLOv6 v4.0 code](https://gith
 - All checkpoints are trained from scratch on COCO for 300 epochs without distillation.
 - Results of the mAP and speed are evaluated on [COCO val2017](https://cocodataset.org/#download) dataset with the input resolution of 640×640.
 - Speed is tested with TensorRT 8.5 on T4 without post-processing.
-- Refer to [Test speed](./docs/Test_speed.md) tutorial to reproduce the speed results of YOLOv6.
-- Params and FLOPs of YOLOv6 are estimated on deployed models.
-
 
 
 ## Quick Start
