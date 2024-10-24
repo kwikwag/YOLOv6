@@ -506,7 +506,7 @@ class CSPBepBackbone_P6(nn.Module):
 
         return tuple(outputs)
 
-class LiteEffiBackbone(nn.Module):
+class Lite_EffiBackbone(nn.Module):
     def __init__(self,
                  in_channels,
                  mid_channels,
@@ -521,22 +521,22 @@ class LiteEffiBackbone(nn.Module):
                              stride=2,
                              padding=1)
 
-        self.LiteEffiblock_1 = self.build_block(num_repeat[0],
+        self.lite_effiblock_1 = self.build_block(num_repeat[0],
                                                  out_channels[0],
                                                  mid_channels[1],
                                                  out_channels[1])
 
-        self.LiteEffiblock_2 = self.build_block(num_repeat[1],
+        self.lite_effiblock_2 = self.build_block(num_repeat[1],
                                                  out_channels[1],
                                                  mid_channels[2],
                                                  out_channels[2])
 
-        self.LiteEffiblock_3 = self.build_block(num_repeat[2],
+        self.lite_effiblock_3 = self.build_block(num_repeat[2],
                                                  out_channels[2],
                                                  mid_channels[3],
                                                  out_channels[3])
 
-        self.LiteEffiblock_4 = self.build_block(num_repeat[3],
+        self.lite_effiblock_4 = self.build_block(num_repeat[3],
                                                  out_channels[3],
                                                  mid_channels[4],
                                                  out_channels[4])
@@ -544,12 +544,12 @@ class LiteEffiBackbone(nn.Module):
     def forward(self, x):
         outputs = []
         x = self.conv_0(x)
-        x = self.LiteEffiblock_1(x)
-        x = self.LiteEffiblock_2(x)
+        x = self.lite_effiblock_1(x)
+        x = self.lite_effiblock_2(x)
         outputs.append(x)
-        x = self.LiteEffiblock_3(x)
+        x = self.lite_effiblock_3(x)
         outputs.append(x)
-        x = self.LiteEffiblock_4(x)
+        x = self.lite_effiblock_4(x)
         outputs.append(x)
         return tuple(outputs)
 
@@ -571,3 +571,9 @@ class LiteEffiBackbone(nn.Module):
                             stride=1)
             block_list.add_module(str(i), block)
         return block_list
+
+
+
+
+class LiteEffiBackbone(Lite_EffiBackbone):
+    pass

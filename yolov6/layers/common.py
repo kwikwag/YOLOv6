@@ -779,8 +779,7 @@ def channel_shuffle(x, groups):
     return x
 
 
-class LiteEffiBlockS1(nn.Module):
-
+class Lite_EffiBlockS1(nn.Module):
     def __init__(self,
                  in_channels,
                  mid_channels,
@@ -809,6 +808,7 @@ class LiteEffiBlockS1(nn.Module):
             stride=1,
             padding=0,
             groups=1)
+
     def forward(self, inputs):
         x1, x2 = torch.split(
             inputs,
@@ -818,12 +818,11 @@ class LiteEffiBlockS1(nn.Module):
         x3 = self.conv_dw_1(x2)
         x3 = self.se(x3)
         x3 = self.conv_1(x3)
-        out = torch.cat([x1, x3], axis=1)
+        out = torch.cat([x1, x3], dim=1)
         return channel_shuffle(out, 2)
 
 
-class LiteEffiBlockS2(nn.Module):
-
+class Lite_EffiBlockS2(nn.Module):
     def __init__(self,
                  in_channels,
                  mid_channels,
@@ -890,10 +889,11 @@ class LiteEffiBlockS2(nn.Module):
         x2 = self.conv_dw_2(x2)
         x2 = self.se(x2)
         x2 = self.conv_2(x2)
-        out = torch.cat([x1, x2], axis=1)
+        out = torch.cat([x1, x2], dim=1)
         out = self.conv_dw_3(out)
         out = self.conv_pw_3(out)
         return out
+
 
 
 class DPBlock(nn.Module):
@@ -983,3 +983,11 @@ class CSPBlock(nn.Module):
         x = torch.cat((x_1, x_2), axis=1)
         x = self.conv_3(x)
         return x
+
+
+class LiteEffiBlockS1(Lite_EffiBlockS1):
+    pass
+
+
+class LiteEffiBlockS2(Lite_EffiBlockS2):
+    pass

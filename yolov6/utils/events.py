@@ -18,10 +18,8 @@ NCOLS = min(100, shutil.get_terminal_size().columns)
 
 def load_yaml(file_path):
     """Load data from yaml file."""
-    if isinstance(file_path, str):
-        with open(file_path, errors='ignore') as f:
-            data_dict = yaml.safe_load(f)
-    return data_dict
+    with open(file_path, errors='ignore') as f:
+        return yaml.safe_load(f)
 
 
 def save_yaml(data_dict, save_path):

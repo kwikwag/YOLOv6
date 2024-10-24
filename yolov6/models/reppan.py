@@ -1091,8 +1091,7 @@ class CSPRepBiFPANNeck_P6(nn.Module):
 
         return outputs
 
-class LiteEffiNeck(nn.Module):
-
+class Lite_EffiNeck(nn.Module):
     def __init__(
         self,
         in_channels,
@@ -1178,19 +1177,19 @@ class LiteEffiNeck(nn.Module):
         x2 = self.reduce_layer2(x2)       #c3
 
         upsample_feat0 = self.upsample0(fpn_out0)
-        f_concat_layer0 = torch.cat([upsample_feat0, x1], 1)
+        f_concat_layer0 = torch.cat([upsample_feat0, x1], dim=1)
         f_out1 = self.Csp_p4(f_concat_layer0)
 
         upsample_feat1 = self.upsample1(f_out1)
-        f_concat_layer1 = torch.cat([upsample_feat1, x2], 1)
+        f_concat_layer1 = torch.cat([upsample_feat1, x2], dim=1)
         pan_out3 = self.Csp_p3(f_concat_layer1) #p3
 
         down_feat1 = self.downsample2(pan_out3)
-        p_concat_layer1 = torch.cat([down_feat1, f_out1], 1)
+        p_concat_layer1 = torch.cat([down_feat1, f_out1], dim=1)
         pan_out2 = self.Csp_n3(p_concat_layer1)  #p4
 
         down_feat0 = self.downsample1(pan_out2)
-        p_concat_layer2 = torch.cat([down_feat0, fpn_out0], 1)
+        p_concat_layer2 = torch.cat([down_feat0, fpn_out0], dim=1)
         pan_out1 = self.Csp_n4(p_concat_layer2)  #p5
 
         top_features = self.p6_conv_1(fpn_out0)
@@ -1200,3 +1199,8 @@ class LiteEffiNeck(nn.Module):
         outputs = [pan_out3, pan_out2, pan_out1, pan_out0]
 
         return outputs
+
+
+
+class LiteEffiNeck(Lite_EffiNeck):
+    pass
