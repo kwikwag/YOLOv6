@@ -431,9 +431,9 @@ class Trainer:
         return images, targets, segmask
 
     def get_model(self, args, cfg, nc, device):
-        if 'YOLOv6-lite' in cfg.model.type:
-            assert not self.args.fuse_ab, 'ERROR in: YOLOv6-lite models not support fuse_ab mode.'
-            assert not self.args.distill, 'ERROR in: YOLOv6-lite models not support distill mode.'
+        if 'YOLOv6_lite' in cfg.model.type:
+            assert not self.args.fuse_ab, 'ERROR in: YOLOv6Lite models not support fuse_ab mode.'
+            assert not self.args.distill, 'ERROR in: YOLOv6Lite models not support distill mode.'
             model = build_lite_model(cfg, nc, device)
         else:
             model = build_model(cfg, nc, device, fuse_ab=self.args.fuse_ab, distill_ns=self.distill_ns)

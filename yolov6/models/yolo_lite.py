@@ -13,7 +13,7 @@ from yolov6.models.heads.effidehead_lite import Detect, build_effidehead_layer
 
 class Model(nn.Module):
     export = False
-    '''YOLOv6 model with backbone, neck and head.
+    '''YOLOv6 Lite model with backbone, neck and head.
     The default parts are EfficientRep Backbone, Rep-PAN and
     Efficient Decoupled Head.
     '''

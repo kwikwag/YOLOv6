@@ -105,11 +105,10 @@ class SPPFModule(nn.Module):
 
     def forward(self, x):
         x = self.cv1(x)
-        with warnings.catch_warnings():
-            warnings.simplefilter('ignore')
-            y1 = self.m(x)
-            y2 = self.m(y1)
-            return self.cv2(torch.cat([x, y1, y2, self.m(y2)], 1))
+        y1 = self.m(x)
+        y2 = self.m(y1)
+        y3 = self.m(y2)
+        return self.cv2(torch.cat([x, y1, y2, y3], dim=1))
 
 
 class SimSPPF(nn.Module):
@@ -780,7 +779,7 @@ def channel_shuffle(x, groups):
     return x
 
 
-class Lite_EffiBlockS1(nn.Module):
+class LiteEffiBlockS1(nn.Module):
 
     def __init__(self,
                  in_channels,
@@ -823,7 +822,7 @@ class Lite_EffiBlockS1(nn.Module):
         return channel_shuffle(out, 2)
 
 
-class Lite_EffiBlockS2(nn.Module):
+class LiteEffiBlockS2(nn.Module):
 
     def __init__(self,
                  in_channels,

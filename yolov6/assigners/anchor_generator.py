@@ -1,5 +1,7 @@
 import torch
 
+from yolov6.utils.export_workarounds import full
+
 
 def generate_anchors(feats, fpn_strides, grid_cell_size=5.0, grid_cell_offset=0.5,  device='cpu', is_eval=False, mode='af'):
     '''Generate anchors from features.'''
@@ -22,12 +24,12 @@ def generate_anchors(feats, fpn_strides, grid_cell_size=5.0, grid_cell_offset=0.
             if mode == 'af': # anchor-free
                 anchor_points.append(anchor_point.reshape([-1, 2]))
                 stride_tensor.append(
-                torch.full(
+                full(
                     (h * w, 1), stride, dtype=torch.float, device=device))
             elif mode == 'ab': # anchor-based
                 anchor_points.append(anchor_point.reshape([-1, 2]).repeat(3,1))
                 stride_tensor.append(
-                    torch.full(
+                    full(
                         (h * w, 1), stride, dtype=torch.float, device=device).repeat(3,1))
         anchor_points = torch.cat(anchor_points)
         stride_tensor = torch.cat(stride_tensor)
@@ -59,7 +61,7 @@ def generate_anchors(feats, fpn_strides, grid_cell_size=5.0, grid_cell_offset=0.
                 anchor_points.append(anchor_point.reshape([-1, 2]).repeat(3,1))
             num_anchors_list.append(len(anchors[-1]))
             stride_tensor.append(
-                torch.full(
+                full(
                     [num_anchors_list[-1], 1], stride, dtype=feats[0].dtype))
         anchors = torch.cat(anchors)
         anchor_points = torch.cat(anchor_points).to(device)

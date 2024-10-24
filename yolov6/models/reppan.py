@@ -1091,7 +1091,7 @@ class CSPRepBiFPANNeck_P6(nn.Module):
 
         return outputs
 
-class Lite_EffiNeck(nn.Module):
+class LiteEffiNeck(nn.Module):
 
     def __init__(
         self,

@@ -65,9 +65,6 @@ def build_network(config, channels, num_classes, num_layers, fuse_ab=False, dist
     reg_max = config.model.head.reg_max
     issolo = config.model.head.issolo
     isseg = config.model.head.isseg
-    npr = config.model.head.npr
-    npr = make_divisible(npr * width_mul, 8)
-    nm = config.model.head.nm
     num_repeat = [(max(round(i * depth_mul), 1) if i > 1 else i) for i in (num_repeat_backbone + num_repeat_neck)]
     channels_list = [make_divisible(i * width_mul, 8) for i in (channels_list_backbone + channels_list_neck)]
 
@@ -116,6 +113,10 @@ def build_network(config, channels, num_classes, num_layers, fuse_ab=False, dist
             block=block
         )
     if isseg:
+        npr = config.model.head.npr
+        npr = make_divisible(npr * width_mul, 8)
+        nm = config.model.head.nm
+
         if issolo:
             from yolov6.models.heads.effidehead_fuseab_seg_solo import Detect, build_effidehead_layer, Proto
             anchors_init = config.model.head.anchors_init
@@ -128,6 +129,7 @@ def build_network(config, channels, num_classes, num_layers, fuse_ab=False, dist
             head_layers = build_effidehead_layer(channels_list, 3, num_classes, reg_max=reg_max, num_layers=num_layers, num_masks=nm, fuse_ab=fuse_ab)
             reg_masks = [Proto(num_layers, channels_list, 0, npr, nm)] 
             head = Detect(num_classes, anchors_init, num_layers, head_layers=head_layers, use_dfl=use_dfl, reg_mask=reg_masks, fuse_ab=fuse_ab)
+
     elif distill_ns:
         from yolov6.models.heads.effidehead_distill_ns import Detect, build_effidehead_layer
         if num_layers != 3:
@@ -151,5 +153,6 @@ def build_network(config, channels, num_classes, num_layers, fuse_ab=False, dist
 
 
 def build_model(cfg, num_classes, device, fuse_ab=False, distill_ns=False):
+
     model = Model(cfg, channels=3, num_classes=num_classes, fuse_ab=fuse_ab, distill_ns=distill_ns).to(device)
     return model
